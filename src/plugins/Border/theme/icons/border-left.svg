@@ -1,8 +1,19 @@
-<svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400"
-	 height="400" viewBox="0, 0, 400,400">
-	<g id="svgg">
-		<path id="path0"
-			  d="M31.200 200.600 L 31.200 370.000 50.600 370.000 L 70.000 370.000 70.000 200.600 L 70.000 31.200 50.600 31.200 L 31.200 31.200 31.200 200.600 "
-			  stroke="none" fill="#0000" fill-rule="evenodd"></path>
+<svg
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:cc="http://creativecommons.org/ns#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns="http://www.w3.org/2000/svg"
+	id="svg3730"
+	version="1.1"
+	viewBox="0 0 8 8"
+	height="8mm"
+	width="8mm">
+	<g
+		id="layer3">
+		<path
+			id="path3762"
+			d="m 0.75595233,0.66666612 c 0,2.45294678 0,6.23660688 0,6.23660688 z"
+			style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
 	</g>
 </svg>

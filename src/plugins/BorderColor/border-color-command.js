@@ -1,12 +1,3 @@
-/**
- * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
- */
-
-/**
- * @module alignment/alignmentcommand
- */
-
 import Command from '@ckeditor/ckeditor5-core/src/command';
 import first from '@ckeditor/ckeditor5-utils/src/first';
 
@@ -14,20 +5,15 @@ import { isDefault } from './utils';
 
 const BORDER_COLOR = 'borderColor';
 
-/**
- * The alignment command plugin.
- *
- * @extends module:core/command~Command
- */
 export default class BorderColorCommand extends Command {
 	/**
 	 * @inheritDoc
 	 */
 	refresh() {
 		let childBlocks;
-		if ( this.editor.model.document.selection.getSelectedElement() )
+		if ( this.editor.model.document.selection.getSelectedElement() != null )
 			childBlocks = this.getSelectedBlocks( this.editor.model.document, 'all-tablerow' );
-		const firstBlock = this.editor.model.document.selection.getSelectedElement()
+		const firstBlock = this.editor.model.document.selection.getSelectedElement() != null
 			? this.editor.model.document.selection.getSelectedElement()
 			: first( this.editor.model.document.selection.getSelectedBlocks() );
 
@@ -67,9 +53,9 @@ export default class BorderColorCommand extends Command {
 
 		model.change( writer => {
 			let childBlocks;
-			if ( this.editor.model.document.selection.getSelectedElement() )
+			if ( this.editor.model.document.selection.getSelectedElement() != null )
 				childBlocks = this.getSelectedBlocks( this.editor.model.document, 'all-tablerow' );
-			const firstBlock = this.editor.model.document.selection.getSelectedElement()
+			const firstBlock = this.editor.model.document.selection.getSelectedElement() != null
 				? this.editor.model.document.selection.getSelectedElement()
 				: first( this.editor.model.document.selection.getSelectedBlocks() );
 
@@ -85,10 +71,12 @@ export default class BorderColorCommand extends Command {
 			// - or no value is passed - denotes default alignment.
 			const removeAlignment = isDefault( value ) || currentAlignment === value || !value;
 			console.log( 'childBlocks / firstBlock', childBlocks, firstBlock, currentAlignment);
+			const blocks = childBlocks ? Array.from( childBlocks ) : [];
+			blocks.push( firstBlock );
 			if ( removeAlignment ) {
-				removeAlignmentFromSelection( childBlocks ? childBlocks.push( firstBlock ) : [ firstBlock ], writer );
+				removeAlignmentFromSelection( blocks, writer );
 			} else {
-				setAlignmentOnSelection( childBlocks ? childBlocks.push( firstBlock ) : [ firstBlock ], writer, value );
+				setAlignmentOnSelection( blocks, writer, value );
 			}
 		} );
 	}

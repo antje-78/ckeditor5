@@ -19,6 +19,8 @@ import borderBottomIcon from './theme/icons/border-bottom.svg';
 import borderLeftIcon from './theme/icons/border-left.svg';
 import borderRightIcon from './theme/icons/border-right.svg';
 import borderNoneIcon from './theme/icons/border-none.svg';
+import borderAllTablerowIcon from './theme/icons/border-all-tablerow.svg';
+import borderRightTablerow from './theme/icons/border-right-tablerow.svg';
 
 const icons = new Map( [
 	[ 'no-border', borderNoneIcon ],
@@ -26,7 +28,9 @@ const icons = new Map( [
 	[ 'left', borderLeftIcon ],
 	[ 'right', borderRightIcon ],
 	[ 'top', borderTopIcon ],
-	[ 'bottom', borderBottomIcon ]
+	[ 'bottom', borderBottomIcon ],
+	[ 'all-tablerow', borderAllTablerowIcon ],
+	[ 'right-tablerow', borderRightTablerow ]
 ] );
 
 /**

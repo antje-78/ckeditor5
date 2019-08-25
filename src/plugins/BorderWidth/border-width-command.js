@@ -25,7 +25,7 @@ export default class BorderWidthCommand extends Command {
 	 */
 	refresh() {
 		let childBlocks;
-		if ( this.editor.model.document.selection.getSelectedElement() )
+		if ( this.editor.model.document.selection.getSelectedElement() != null )
 			childBlocks = this.getSelectedBlocks( this.editor.model.document, 'all-tablerow' );
 		const firstBlock = this.editor.model.document.selection.getSelectedElement()
 			? this.editor.model.document.selection.getSelectedElement()
@@ -67,9 +67,9 @@ export default class BorderWidthCommand extends Command {
 
 		model.change( writer => {
 			let childBlocks;
-			if ( this.editor.model.document.selection.getSelectedElement() )
+			if ( this.editor.model.document.selection.getSelectedElement() != null )
 				childBlocks = this.getSelectedBlocks( this.editor.model.document, 'all-tablerow' );
-			const firstBlock = this.editor.model.document.selection.getSelectedElement()
+			const firstBlock = this.editor.model.document.selection.getSelectedElement() != null
 				? this.editor.model.document.selection.getSelectedElement()
 				: first( this.editor.model.document.selection.getSelectedBlocks() );
 
@@ -85,10 +85,12 @@ export default class BorderWidthCommand extends Command {
 			// - or no value is passed - denotes default alignment.
 			const removeAlignment = isDefault( value ) || currentAlignment === value || !value;
 			console.log( 'childBlocks / firstBlock', childBlocks, firstBlock, currentAlignment);
+			const blocks = childBlocks ? Array.from( childBlocks ) : [];
+			blocks.push( firstBlock );
 			if ( removeAlignment ) {
-				removeAlignmentFromSelection( childBlocks ? childBlocks.push( firstBlock ) : [ firstBlock ], writer );
+				removeAlignmentFromSelection( blocks, writer );
 			} else {
-				setAlignmentOnSelection( childBlocks ? childBlocks.push( firstBlock ) : [ firstBlock ], writer, value );
+				setAlignmentOnSelection( blocks, writer, value );
 			}
 		} );
 	}
