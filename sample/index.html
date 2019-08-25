@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor 5 – classic editor build – development sample</title>
+	<style>
+
+
+
+	</style>
+</head>
+<body>
+
+<h1>CKEditor 5 – classic editor build – development sample</h1>
+
+<div class="document-editor">
+	<div class="document-editor__toolbar"></div>
+	<div class="document-editor__editable-container">
+		<div class="document-editor__editable" id="editor" >
+			<h2>Sample</h2>
+
+			<p>This is an instance of the <a href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html#classic-editor">classic editor build</a>.</p>
+
+			<p>Hello <span class="placeholder">{name}</span>!</p>
+
+			<section class="simple-box">
+				<h1 class="simple-box-title">Box title</h1>
+				<div class="simple-box-description">
+					<p>The description goes here.</p>
+					<ul>
+						<li>It can contain lists,</li>
+						<li>and other block elements like headings.</li>
+					</ul>
+				</div>
+			</section>
+
+			<figure class="image">
+				<img src="../tests/manual/sample.jpg" alt="Autumn fields" />
+			</figure>
+
+			<p>You can use this sample to validate whether your <a href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/custom-builds.html">custom build</a> works fine.</p>
+		</div>
+	</div>
+</div>
+
+<!--<script src="../build/app.js"></script>-->
+<script src="../build/ckeditor.js"></script>
+<script src="../node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js"></script>
+<script>
+	ClassicEditor.create( document.querySelector( '#editor' ) )
+		.then( editor => {
+			window.editor = editor;
+			CKEditorInspector.attach( editor );
+			editor.model.document.on( 'change:data', (event, value, value2) => {
+				console.log( 'The data has changed!', event, value , value2);
+			} );
+			document.getElementsByClassName('document-editor__toolbar')[0].appendChild( editor.ui.view.toolbar.element );
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+</script>
+
+</body>
+</html>
