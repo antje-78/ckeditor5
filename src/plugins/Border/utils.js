@@ -1,51 +1,19 @@
 /**
- * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ * @module border/utils
  */
+export function getSelectedBlocks( editor ) {
+	let blocks;
+	const doc = editor.model.document;
+	if ( doc.selection.getSelectedElement() == null )
+		blocks = Array.from( doc.selection.getSelectedBlocks() ).filter( block => canBeBordered( editor, block ) ).slice(0, doc.selection.getSelectedBlocks().length)
+	else
+		blocks = [ doc.selection.getSelectedElement() ];
 
-/**
- * @module alignment/utils
- */
-
-/**
- * The list of supported alignment options:
- *
- * * `'left'`,
- * * `'right'`,
- * * `'center'`,
- * * `'justify'`
- */
-export const supportedOptions = [
-	'no-border',
-	'all',
-	'left',
-	'right',
-	'top',
-	'bottom',
-	'all-tablerow',
-	'left-tablerow',
-	'right-tablerow',
-	'top-tablerow',
-	'bottom-tablerow'
-];
-
-/**
- * Checks whether the passed option is supported by {@link module:alignment/alignmentediting~BorderColorEditing}.
- *
- * @param {String} option The option value to check.
- * @returns {Boolean}
- */
-export function isSupported( option ) {
-	return supportedOptions.includes( option );
+	return blocks;
 }
 
-/**
- * Checks whether border is the default one.
- *
- * @param {String} border The name of the border to check.
- * @returns {Boolean}
- */
-export function isDefault( border ) {
-	// Right now only LTR is supported so the 'left' value is always the default one.
-	return border === 'no-border';
+export const BORDER = 'border';
+
+export function canBeBordered( editor, block ) {
+	return editor.model.schema.checkAttribute( block, BORDER );
 }

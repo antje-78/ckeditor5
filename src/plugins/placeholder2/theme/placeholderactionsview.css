@@ -1,0 +1,9 @@
+.ck.ck-placeholder-actions-container {
+	display: flex;
+	flex-direction: column;
+	padding: 16px;
+}
+
+.ck.ck-button.ck-button-save, a.ck.ck-button.ck-button-save {
+	height: 16px;
+}

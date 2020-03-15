@@ -1,17 +1,17 @@
-.placeholder {
-	background: #ffff00;
+.placeholder2 {
+	background: #e8e8e8;
 	padding: 4px 2px;
 	outline-offset: -2px;
 	line-height: 1em;
 	margin: 0 1px;
 }
 
-.placeholder::selection {
+.placeholder2::selection {
 	display: none;
 }
 
-.ck.ck-demo-container {
+.ck-placeholder-actions-container {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: nowrap;
+	padding: 16px;
 }

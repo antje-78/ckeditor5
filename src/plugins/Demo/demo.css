@@ -1,0 +1,5 @@
+.ck.ck-demo-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}

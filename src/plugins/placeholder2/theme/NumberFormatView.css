@@ -1,0 +1,24 @@
+.ck.ck-numberFormatView-container {
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 520px;
+	justify-content: flex-end;
+	display: none;
+}
+
+.ck.ck-numberFormatView-container.visible {
+	display: flex;
+}
+
+.ck.ck-numberFormatView-container div {
+	padding-bottom: 16px;
+}
+
+.ck.ck-numberFormatView-container input {
+	font-size: 14px;
+}
+
+.ck.ck-numberFormatView-container div:nth-child(1),
+.ck.ck-numberFormatView-container div:nth-child(3) {
+	padding-right: 16px;
+}

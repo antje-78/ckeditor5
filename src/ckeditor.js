@@ -1,99 +1,119 @@
 /**
- * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2014-2020, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
+import DecoupledDocumentEditor from '@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor.js';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
+import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
+import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily.js';
+import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
+import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
+import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight.js';
+import Image from '@ckeditor/ckeditor5-image/src/image.js';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
+import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock.js';
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
+import Link from '@ckeditor/ckeditor5-link/src/link.js';
+import List from '@ckeditor/ckeditor5-list/src/list.js';
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
+import Table from '@ckeditor/ckeditor5-table/src/table.js';
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
+import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
+import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave.js';
+import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage.js';
+import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor.js';
+import FontBackgroundColor from '@ckeditor/ckeditor5-font/src/fontbackgroundcolor.js';
+import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline.js';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize.js';
+import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak.js';
+import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat.js';
+import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters.js';
+import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials.js';
+import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/src/specialcharacterscurrency.js';
+import SpecialCharactersArrows from '@ckeditor/ckeditor5-special-characters/src/specialcharactersarrows.js';
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript.js';
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript.js';
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
+import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 
-// The editor creator to use.
-import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+// Custom Plugins
+import Border from './plugins/Border/Border/border';
+import BorderWidth from './plugins/Border/BorderWidth/border-width';
+import BorderColor from './plugins/Border/BorderColor/border-color';
+import BorderFillColor from './plugins/Border/BorderFillColor/border-fill-color';
+import BorderStyle from './plugins/Border/BorderStyle/border-style';
+import Placeholder2 from './plugins/placeholder2/placeholder2';
 
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
-import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
-import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
-import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
-import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
-import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
-import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import List from '@ckeditor/ckeditor5-list/src/list';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import Table from '@ckeditor/ckeditor5-table/src/table';
-import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-import FontSizePlugin from '@ckeditor/ckeditor5-font/src/fontsize';
-import FontFamilyPlugin from '@ckeditor/ckeditor5-font/src/fontfamily';
-import FontColorPlugin from '@ckeditor/ckeditor5-font/src/fontcolor';
-import FontBackgroundColor from '@ckeditor/ckeditor5-font/src/fontbackgroundcolor';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-import DecoupledEditor from '@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
-import SimpleBox from './plugins/Simplebox/simplebox';
-import Placeholder from './plugins/placeholder/placeholder';
-import Demo from './plugins/placeholder/Demo/demo';
-import Border from './plugins/Border/border';
-import './ckeditor.css';
-import BorderWidth from './plugins/BorderWidth/border-width';
-import BorderColor from './plugins/BorderColor/border-color';
+// CKEditor Inspector
+import CKEditorInspector from '../node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js';
+import Demo from "./plugins/Demo/demo";
+import Save from "./plugins/SavePlugin/save";
 
-export default class ClassicEditor extends DecoupledEditor {}
+export default class Editor extends DecoupledDocumentEditor {}
 
 // Plugins to include in the build.
-ClassicEditor.builtinPlugins = [
-	Essentials,
-	UploadAdapter,
-	Autoformat,
-	Bold,
-	Italic,
+Editor.builtinPlugins = [
+	Alignment,
 	BlockQuote,
-	CKFinder,
-	EasyImage,
+	Bold,
+	FontFamily,
+	FontSize,
 	Heading,
+	Highlight,
 	Image,
 	ImageCaption,
 	ImageStyle,
 	ImageToolbar,
 	ImageUpload,
-	Link,
-	List,
-	MediaEmbed,
-	Paragraph,
-	PasteFromOffice,
-	Table,
-	TableToolbar,
-	FontSizePlugin,
-	FontFamilyPlugin,
-	FontColorPlugin,
-	FontBackgroundColor,
-	Underline,
-	Strikethrough,
-	Subscript,
-	Superscript,
-	Alignment,
 	Indent,
 	IndentBlock,
-	SimpleBox,
-	Placeholder,
-	Demo,
+	Italic,
+	Link,
+	List,
+	Strikethrough,
+	Table,
+	TableToolbar,
+	Underline,
+	Autoformat,
+	Autosave,
+	EasyImage,
+	FontColor,
+	FontBackgroundColor,
+	HorizontalLine,
+	ImageResize,
+	PageBreak,
+	RemoveFormat,
+	SpecialCharacters,
+	SpecialCharactersEssentials,
+	SpecialCharactersCurrency,
+	SpecialCharactersArrows,
+	Subscript,
+	Superscript,
+	TableCellProperties,
+	TableProperties,
+	Essentials,
+	Paragraph,
 	Border,
 	BorderWidth,
-	BorderColor
+	BorderColor,
+	BorderFillColor,
+	BorderStyle,
+	Placeholder2,
+	Demo,
+	Save
 ];
 
 const _colors = [
 	{
-		color: 'hsl(0, 0%, 0%)',
+		color: 'rgb(0, 0, 0)',
 		label: 'Schwarz'
 	},
 	{
@@ -212,45 +232,54 @@ const _colors = [
 ];
 
 // Editor configuration.
-ClassicEditor.defaultConfig = {
-	extraPlugins: [ BorderWidth, BorderColor ],
+Editor.defaultConfig = {
 	toolbar: {
 		items: [
+			'save',
+			'demo',
+			'|',
 			'heading',
 			'|',
 			'fontSize',
 			'fontFamily',
 			'fontColor',
 			'fontBackgroundColor',
+			'removeFormat',
+			'|',
 			'bold',
 			'italic',
 			'underline',
-			'strikeThrough',
-			'subScript',
-			'superScript',
-			'|',
-			'alignment',
-			'|',
-			'outdent',
-			'indent',
+			'strikethrough',
+			'subscript',
+			'superscript',
+			'highlight',
 			'|',
 			'border',
 			'borderWidth',
 			'bordercolor',
+			'borderFillColor',
+			'borderstyle',
 			'|',
-			'simpleBox',
-			'placeholder',
-			'demo',
+			'placeholder2',
+			'|',
+			'alignment',
+			'|',
+			'numberedList',
+			'bulletedList',
+			'|',
+			'indent',
+			'outdent',
 			'|',
 			'link',
-			'bulletedList',
-			'numberedList',
+			'blockQuote',
 			'imageUpload',
 			'insertTable',
 			'|',
-			'Clipboard',
 			'undo',
-			'redo'
+			'redo',
+			'horizontalLine',
+			'pageBreak',
+			'specialCharacters'
 		]
 	},
 	image: {
@@ -265,14 +294,18 @@ ClassicEditor.defaultConfig = {
 		contentToolbar: [
 			'tableColumn',
 			'tableRow',
-			'mergeTableCells'
+			'mergeTableCells',
+			'tableCellProperties',
+			'tableProperties'
 		]
 	},
 	fontColor: {
-		colors: _colors
+		colors: _colors,
+		documentColorsCount: 10
 	},
 	fontBackgroundColor: {
-		colors: _colors
+		colors: _colors,
+		documentColorsCount: 10
 	},
 	fontSize: {
 		options: [
@@ -289,25 +322,98 @@ ClassicEditor.defaultConfig = {
 			36
 		]
 	},
+	borderColor: {
+		colors: _colors,
+		documentColorsCount: 10
+	},
+	borderFillColor: {
+		colors: _colors
+	},
+	'borderColor.documentColorsCount': 10,
 	placeholderConfig: {
 		types: [ 'date', 'color', 'first name', 'surname' ] // ADDED
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
-	language: 'de'
+	language: 'de',
+	placeholder2: {
+		items: {
+			'Sonstiges': {
+				invoiceDate: {
+					name: 'Rechnungsdatum',
+					type: 'Date'
+				}
+			},
+			'Item1' : {
+				item1: {
+					name: 'Item1',
+					type: 'String'
+				}
+			}
+		}
+	},
+	heading: {
+		options: [
+			{ model: 'paragraph', title: 'Standard', class: 'ck-heading_paragraph' },
+			{ model: 'heading1', view: 'h1', title: 'Überschrift 1', class: 'ck-heading_heading1' },
+			{ model: 'heading2', view: 'h2', title: 'Überschrift 2', class: 'ck-heading_heading2' },
+			{ model: 'heading3', view: 'h3', title: 'Überschrift 3', class: 'ck-heading_heading3' }
+		]
+	}
 };
 
-// ClassicEditor
-// 	.create( document.querySelector( '#editor' ) )
-// 	.then( editor => {
-// 		console.log( 'Editor was initialized', editor );
-//
-// 		window.editor = editor;
-//
-// 		editor.model.document.on( 'change:data', ( event, value, value2 ) => {
-// 			console.log( 'The data has changed!', event, value, value2 );
-// 		} );
-// 		document.getElementsByClassName( 'document-editor__toolbar' )[0].appendChild( editor.ui.view.toolbar.element );
-// 	} )
-// 	.catch( err => {
-// 		console.error( err.stack );
-// 	} );
+Editor
+	.create( document.querySelector( '#editor' ) )
+	.then( editor => {
+		console.log( 'Editor was initialized', editor );
+
+		window.editor = editor;
+		window.editor.createXML = createXML;
+		window.editor.createElements = createElements;
+
+		editor.model.document.on( 'change:data', ( event, value, value2 ) => {
+			console.log( 'The data has changed!', event, value, value2 );
+		} );
+
+		CKEditorInspector.attach( editor );
+
+		document.getElementsByClassName( 'document-editor__toolbar' )[0].appendChild( editor.ui.view.toolbar.element );
+	} )
+	.catch( err => {
+		console.error( err.stack );
+	} );
+
+function createXML() {
+	const document = window.editor.model.document;
+	const items = document.roots._items;
+	let _xml = '';
+	for ( let item of items ) {
+		if ( item.rootName == 'main' ) {
+			_xml += '<main>';
+			if ( item._children && item._children._nodes )
+				_xml += window.editor.createElements( item._children._nodes );
+			_xml += '</main>';
+		}
+	}
+	return _xml;
+}
+
+function createElements( nodes ) {
+	let _xml = '';
+	for ( let _node of nodes ) {
+		const name = _node.name;
+		if ( name ) {
+			_xml += '<' + name;
+			_node._attrs.forEach( (item, index) => _xml += ' ' + index + '="' + item + '"');
+			_xml += '>';
+			if ( _node._children && _node._children._nodes)
+				_xml += window.editor.createElements( _node._children._nodes );
+			_xml += '</' + name + '>'
+		}
+		if ( _node.data ) {
+			_xml += '<text';
+			_node._attrs.forEach( (item, index) => _xml += ' ' + index + '="' + item+ '"');
+			_xml += '>' + _node.data + '</text>';
+		}
+	}
+	return _xml;
+}
